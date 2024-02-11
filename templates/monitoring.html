@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Honeypot Monitoring</title>
+</head>
+<body>
+    <h1>Honeypot Monitoring</h1>
+    
+    <h2>Login Attempts</h2>
+    <div>
+        {% for entry in log_entries['login'] %}
+            <p>{{ entry }}</p>
+        {% endfor %}
+    </div>
+
+    <h2>Verify Reset Code Attempts</h2>
+    <div>
+        {% for entry in log_entries['verify_reset_code'] %}
+            <p>{{ entry }}</p>
+        {% endfor %}
+    </div>
+
+    <h2>Admin Login Attempts</h2>
+    <div>
+        {% for entry in log_entries['admin_login'] %}
+            <p>{{ entry }}</p>
+        {% endfor %}
+    </div>
+
+    <h2>Other Requests</h2>
+    <div>
+        {% for entry in log_entries['other'] %}
+            <p>{{ entry }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

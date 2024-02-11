@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f2f2f2; /* Light grey background */
+            padding: 10px;
+            flex-wrap: wrap; /* Allow the bar to wrap onto the next line on small screens */
+        }
+        .search-form, .login-form, .logout-button {
+            margin: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .search-form input[type="text"], 
+        .search-form button, 
+        .login-button, 
+        .logout-button button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-form button, .login-button, .logout-button button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .search-form button:hover, .login-button:hover, .logout-button button:hover {
+            background-color: #45a049;
+        }
+        .logout-button button {
+            padding: 10px 15px;
+            width: auto;
+            position: relative; /* changed from absolute to relative */
+            top: auto; /* reset top positioning */
+            right: auto; /* reset right positioning */
+            z-index: 1; /* set z-index to 1 to ensure it's above other elements */
+        }
+        @media (max-width: 768px) {
+            .search-form,
+            .login-form {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+            .search-form input[type="text"] {
+                flex-grow: 1;
+                margin-right: 0;
+            }
+            .login-button, .logout-button button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+        .news-item {
+            margin: auto;
+            max-width: 800px;
+            text-align: left;
+        }
+        .news-item img {
+            width: 100%;
+            height: auto;
+            max-width: 400px;
+            margin: 10px auto;
+            display: block;
+        }
+        .comments {
+            text-align: left;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        .comment {
+            background-color: #f2f2f2;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        form.post-comment {
+            margin-top: 15px;
+        }
+        textarea {
+            width: 50%;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        button {
+            display: block;
+            width: 50%;
+            padding: 8px;
+            margin: 0 auto 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <!-- Search Form -->
+        <form action="{{ url_for('search_news') }}" method="get" class="search-form">
+            <input type="text" name="query" placeholder="Search news..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Admin and User Login Buttons -->
+        {% if 'email' not in session and 'is_admin' not in session %}
+            <div>
+                <form action="{{ url_for('admin_login') }}" method="get" class="login-form">
+                    <button type="submit" class="login-button">Admin Login</button>
+                </form>
+                <form action="{{ url_for('login') }}" method="get" class="login-form">
+                    <button type="submit" class="login-button">User Login</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if 'email' in session or 'is_admin' in session %}
+        <form action="{{ url_for('logout') }}" method="post" class="logout-button">
+            <button type="submit">Logout</button>
+        </form>
+    {% endif %}
+    <h1>Travel News</h1>
+    {% for item in news_items %}
+        <div class="news-item">
+            <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
+            <p>{{ item.summary | safe }}</p>
+            <!-- Form to submit a comment for regular users -->
+            {% if 'email' in session %}
+                <form action="{{ url_for('post_comment') }}" method="post">
+                    <input type="hidden" name="news_id" value="{{ item.link }}">
+                    <textarea name="comment"></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
+            {% endif %}
+            <!-- Form to submit a comment for admins -->
+            {% if 'is_admin' in session and session['is_admin'] %}
+            <form action="{{ url_for('post_admin_comment') }}" method="post" class="post-comment">
+                <input type="hidden" name="news_id" value="{{ item.link }}">
+                <textarea name="comment" required></textarea>
+                <button type="submit">Post Comment as Admin</button>
+            </form>
+            {% endif %}
+            <!-- Display comments for this news item -->
+            {% if news_comments.get(item.link) %}
+                <div class="comments">
+                    {% for comment_id, email, comment_text in news_comments[item.link] %}
+                        <div class="comment">
+                            <strong>{{ email }}:</strong> {{ comment_text }}
+                            <!-- Admin delete button -->
+                            {% if 'is_admin' in session and session['is_admin'] %}
+                                <form action="{{ url_for('delete_comment', comment_id=comment_id) }}" method="post">
+                                    <button type="submit">Delete Comment</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>

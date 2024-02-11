@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type=email], input[type=password], input[type=text] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            padding: 10px;
+            color: white;
+            background-color: #5cb85c;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type=submit]:hover {
+            background-color: #4cae4c;
+        }
+        .captcha-img {
+            margin-bottom: 15px;
+        }
+        .message {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form method="post">
+            <input type="email" name="admin_email" placeholder="Email" required>
+            <input type="password" name="admin_password" placeholder="Password" required>
+            <div class="captcha-container">
+                <img src="/captcha" alt="CAPTCHA" class="captcha-img">
+            </div>
+            <input type="text" name="captcha_response" placeholder="Enter CAPTCHA" required>
+            <input type="submit" value="Login">
+        </form>
+        <p class="message">{{ message }}</p>
+        <p><a href="{{ url_for('forgot_admin_password') }}">Forgot Password?</a></p>
+    </div>
+</body>
+</html>
