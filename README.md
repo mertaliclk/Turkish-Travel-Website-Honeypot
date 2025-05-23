@@ -1,37 +1,143 @@
 # Turkish Travel Advice Website Honeypot
-This project is a Flask-based web application designed as a honeypot for a Turkish travel advice/news website. It features a decoy system displaying current news, a member and admin login system with distinct security mechanisms, and a monitoring system to track user interactions and potential security breaches. The application is designed to replicate certain vulnerabilities for educational and security testing purposes for Sabanci University CS 437 Cybersecurity course.
 
-Features
-Dynamic Content Delivery: Utilizes RSS feeds to display up-to-date travel advice and restrictions, providing dynamic content to engage users and deter honeypot detection.
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Flask](https://img.shields.io/badge/Flask-2.x-lightgrey)
+![SQLite](https://img.shields.io/badge/SQLite-3.x-green)
+![Twilio](https://img.shields.io/badge/Twilio-API-red)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-User Authentication System: Includes a member login with a simple CAPTCHA mechanism and a vulnerable password reset feature lacking rate limiting, susceptible to brute force attacks.
+A sophisticated honeypot web application designed for educational purposes in cybersecurity, simulating a Turkish travel advice website with intentional vulnerabilities for security testing and analysis.
 
-Admin Authentication System: Features an admin login with multi-factor authentication (MFA), a more secure CAPTCHA, and a password reset mechanism via SMS with proper rate limiting.
+## 📋 Overview
 
-Security Logging: Implements a logging system to monitor login attempts, password reset requests, and other significant actions, distinguishing between normal and suspicious activities.
+This project implements a Flask-based honeypot system that mimics a Turkish travel advice website. It's designed for the CS 437 Cybersecurity course at Sabanci University, featuring various security mechanisms and intentional vulnerabilities for educational purposes.
 
-Interactive Comment System: Allows registered members to post comments on news articles and admins to manage these comments.
+## 🎯 Project Goals
 
-### Prerequisites & Setup
+- Demonstrate real-world web application vulnerabilities
+- Implement and test various security mechanisms
+- Provide hands-on experience with security testing
+- Monitor and analyze potential security breaches
+- Educate about common web application security issues
 
-    pip install flask flask-mail sqlite3 captcha twilio feedparser
+## 📊 Key Features
 
-Fill in the configuration details in the application for SMTP settings, Twilio API credentials, and any other required information in placeholders.
+### Content Management
+- Dynamic RSS feed integration for travel advice
+- Real-time content updates
+- News article management system
+- Interactive comment system
 
-### Database Initialization
-The database script creates three tables: users, admins, and comments, and populates them with sample data. Users and admins are added with hashed passwords for security.
+### Security Systems
+- Multi-level authentication:
+  - Member login with basic CAPTCHA
+  - Admin login with MFA
+  - SMS-based password reset
+- Comprehensive logging system
+- Rate limiting implementation
+- Security breach monitoring
 
-    python database_init.py
+### Testing Tools
+- CAPTCHA breaker demonstration
+- Brute force attack simulation
+- Security testing scripts
+- Vulnerability assessment tools
 
-### Usage
-Start the application:
+## 🛠️ Technologies Used
 
-    python app.py
-Access it via http://localhost:5000 in a web browser to interact with the honeypot's features.
+- Python 3.x
+- Flask web framework
+- SQLite database
+- Twilio API for SMS
+- Flask-Mail for email
+- CAPTCHA implementation
+- Feedparser for RSS
+- Security logging system
 
-### Security Testing Scripts
-#### CAPTCHA Breaker
-The breakcap.py script demonstrates how the application's simple CAPTCHA can be bypassed. It programmatically solves the CAPTCHA on the login page and attempts to log in with a given email and password. 
+## 📈 Project Structure
 
-#### Brute Force Attack
-The brute.py script is designed to test the vulnerability of the password reset feature. It attempts to guess the reset code through brute force, exploiting the lack of rate limiting.
+1. **Web Application**
+   - Main application server
+   - Route handlers
+   - Template rendering
+   - Static file serving
+
+2. **Authentication System**
+   - Member authentication
+   - Admin authentication
+   - Password reset mechanisms
+   - CAPTCHA implementation
+
+3. **Database Management**
+   - User data storage
+   - Admin management
+   - Comment system
+   - Security logs
+
+4. **Security Testing**
+   - CAPTCHA breaker script
+   - Brute force attack script
+   - Vulnerability assessment tools
+
+## 💻 Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/turkish-travel-honeypot.git
+cd turkish-travel-honeypot
+```
+
+2. Install required packages:
+```bash
+pip install flask flask-mail sqlite3 captcha twilio feedparser
+```
+
+3. Configure the application:
+   - Set up SMTP settings
+   - Configure Twilio API credentials
+   - Update other configuration parameters
+
+4. Initialize the database:
+```bash
+python database_init.py
+```
+
+5. Start the application:
+```bash
+python app.py
+```
+
+Access the system at `http://localhost:5000`
+
+## 🔍 Security Testing
+
+### CAPTCHA Breaker
+```bash
+python breakcap.py
+```
+Demonstrates how the application's simple CAPTCHA can be bypassed.
+
+### Brute Force Attack
+```bash
+python brute.py
+```
+Tests the vulnerability of the password reset feature through brute force attempts.
+
+## ⚠️ Security Considerations
+
+- This is an educational project
+- Contains intentional vulnerabilities
+- For testing and learning purposes only
+- Not suitable for production use
+- Use in controlled environment
+
+## 👤 Author
+
+Mert Ali Celik
+
+## 🙏 Acknowledgments
+
+- Sabanci University CS 437 Course
+- Open-source security community
+- Contributors and testers
+- Educational resources
