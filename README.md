@@ -4,7 +4,6 @@
 ![Flask](https://img.shields.io/badge/Flask-2.x-lightgrey)
 ![SQLite](https://img.shields.io/badge/SQLite-3.x-green)
 ![Twilio](https://img.shields.io/badge/Twilio-API-red)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 A sophisticated honeypot web application designed for educational purposes in cybersecurity, simulating a Turkish travel advice website with intentional vulnerabilities for security testing and analysis.
 
