@@ -134,6 +134,7 @@ Tests the vulnerability of the password reset feature through brute force attemp
 ## 👤 Author
 
 Mert Ali Celik
+Anıl Ozan Ayhan
 
 ## 🙏 Acknowledgments
 
